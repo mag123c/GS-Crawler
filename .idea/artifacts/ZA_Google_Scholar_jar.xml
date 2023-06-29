@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ZA_Google_Scholar:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/ZA_Google_Scholar_jar</output-path>
+    <root id="archive" name="ZA_Google_Scholar.jar">
+      <element id="module-output" name="ZA_Google_Scholar" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/selenium/client-combined-3.141.59.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/selenium/okio-1.14.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jsoup/jsoup-1.11.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jsoup/jsoup-1.11.3-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql_j8.0/mysql-connector-java-8.0.16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/selenium/guava-25.0-jre.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jsoup/jsoup-1.11.3-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/selenium/byte-buddy-1.8.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/selenium/okhttp-3.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/selenium/commons-exec-1.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

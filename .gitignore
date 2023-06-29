@@ -1,0 +1,7 @@
+bin/
+*.class
+*.log
+*.xlsx
+*.conf
+*.txt
+log/
