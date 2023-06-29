@@ -1,7 +1,7 @@
 # GS-Crawler
 
 ## 설명
-JDBC, selenium을 이용한 키워드 검색 결과 데이터를 DB에 insert하고, update할 수 있는 Crawler
+Window, Linux 환경에서의JDBC, selenium을 이용한 키워드 검색 결과 데이터를 DB에 insert하고, update할 수 있는 Crawler
 <br><br>
 
 ## 인계 시 기존 Crawler
@@ -39,4 +39,5 @@ java -jar [filename] [DB keyword ID(PK)] [max_page_num]
 ```
 1. DB, Log, 설정 경로를 본인의 경로로 셋팅 필수
 2. 관리자 권한으로의 실행 필요(NIC Switching)
-
+3. NIC Switching을 미사용 시, switchingNIC 메서드와 관련 작업 수행 코드 주석처리.
+4. gateway map에 실 사용되는 gateway 입력
