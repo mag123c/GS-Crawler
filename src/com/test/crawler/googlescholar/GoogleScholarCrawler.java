@@ -615,7 +615,7 @@ public class GoogleScholarCrawler {
     		
     		pre = driver.findElement(By.cssSelector("pre")).getText();
     		
-    		if(pre.contains("title={")) dataset[1] = pre.substring(pre.indexOf("title={")+"title={".length(), pre.indexOf("}", pre.indexOf("title={")));
+    		if(pre.contains("title={")) dataset[1] = pre.substring(pre.indexOf("title={")+"title={".length(), pre.indexOf("},", pre.indexOf("title={")));
     		if(pre.contains("year={")) dataset[5] = pre.substring(pre.indexOf("year={")+"year={".length(), pre.indexOf("}", pre.indexOf("year={")));
     		
     		driver.close();
