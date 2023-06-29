@@ -34,6 +34,7 @@ Google의 주기적인 봇 탐지, Crawler block 기능이 update되어 현 상�
 ## 사용
 
 ```
+//system args 설정
 java -jar [filename] [DB keyword ID(PK)] [max_page_num]
 ```
 1. DB, Log, 설정 경로를 본인의 경로로 셋팅 필수
