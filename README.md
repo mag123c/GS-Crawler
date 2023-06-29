@@ -2,6 +2,7 @@
 
 ## 설명
 Window, Linux 환경에서의JDBC, selenium을 이용한 키워드 검색 결과 데이터를 DB에 insert하고, update할 수 있는 Crawler
+
 고도화 기간 : 2023.05 ~ 2023.06
 <br><br>
 
