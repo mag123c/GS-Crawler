@@ -30,7 +30,9 @@ public class HalfAutoGSCrawler {
     private static String label = "REFDB";
     private static String path = "LOCAL_LOG_PATH";
     private static Connection mysql;
-    private static String chromePath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"; 
+    private static String chromePath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
+    private static int page = 0;
+    private static int count = 0;
 
 
     public static void main(String[] args) throws Exception {
@@ -43,9 +45,12 @@ public class HalfAutoGSCrawler {
         	Log.writeLogMsg("[ChromeDriver Error] Please Check ChromeDriver", path);
     	}
     	   	
-    	while(!driver.getCurrentUrl().contains("scholar.google.com/scholar?")) {
-    		System.out.println("Google Scholar에 검색을 시도해야 동작함");
-    		Thread.sleep(1000);
+    	boolean searchChk = false;
+    	while(!driver.getCurrentUrl().contains("scholar.google.com/scholar?")) {    		
+    		if(!searchChk) {
+    			System.out.println("Google Scholar에 검색을 시도해야 동작함");
+    			searchChk = true;
+    		}    		
     	}    	
 		
         int filter_id = 0;
@@ -86,7 +91,6 @@ public class HalfAutoGSCrawler {
         ResultSet rs = pst.getGeneratedKeys();
 
         int lastHistoryId = 0;
-        Integer count = 0;
         
         while (rs.next()) {
             lastHistoryId = rs.getInt(1);
@@ -98,37 +102,29 @@ public class HalfAutoGSCrawler {
         Log.writeLogMsg(programName + "\n\n", path);
         Log.writeLogMsg(programName + " 프로그램 크롤링 시작", path);
         long start = System.currentTimeMillis();   
-
-		int page = 0;
-		int cnt = 0;
 		
 		boolean run = true;
     	while(run) {
     		try {
     			nextURL = driver.getCurrentUrl();
+    		
+    		
+	    		if(page > 0 && (!currentURL.equals(nextURL)) && nextURL.contains("scholar.google.com/scholar?")) {
+	    			selenium(driver);
+	    			page++;
+	    		}
+	    		
+	    		else if(page == 0) {
+	    			selenium(driver);
+	    			page++;	    			 
+	    		}
+	    		
+	    		if(!run) break;
     		} catch(WebDriverException e) {
-            	Log.writeLogMsg("[Chrome has been closed]", path);
-            	updateHistoryWhenError(mysql, e, lastHistoryId, cnt, driver);   
+            	Log.writeLogMsg("[Chrome has been closed] 크롬이 종료되었습니다. 프로그램을 종료합니다.", path);
+            	updateHistoryWhenFinished(mysql, e, lastHistoryId, driver, start);   
+            	return;
     		}
-    		
-    		
-    		if(page > 0 && (!currentURL.equals(nextURL)) && nextURL.contains("scholar.google.com/scholar?")) {
-    			selenium(driver, cnt);
-    			page++;
-    		}
-    		
-    		else if(page == 0) {
-    			int currentCount = selenium(driver, cnt);
-    			
-    			if(currentCount != cnt) {
-    				System.out.println("데이터 INSERT 완료, 파싱할 다른 페이지가 필요합니다.");
-    				page++;
-    			}
-    			
-    			else System.out.println("파싱 실패. 현재 페이지 파싱 불가능"); 
-    		}
-    		
-    		if(!run) break;
     		    		    		
     	}
     	
@@ -145,7 +141,7 @@ public class HalfAutoGSCrawler {
         if (!mysql.isClosed()) closeDB();
 	
     }
-    
+
 	private static int connectDB() {
 		int connect = 0;
 		try {
@@ -200,17 +196,18 @@ public class HalfAutoGSCrawler {
 		return driver;  
 	}
 
-	private static int selenium(ChromeDriver driver, int count) throws Exception {		
+	private static int selenium(ChromeDriver driver) throws Exception {		
 		List<WebElement> elem = driver.findElements(By.className("gs_ri"));
 		if(elem.size() == 0) {			
 			System.out.println("reCAPTCHA 해제중");
 			Thread.sleep(10000);
-			return selenium(driver, count);
+			return selenium(driver);
 		}
+		
 		/*
 		 * parsingData : URL, TITLE, AUTHOR, CID, CNUM, PUBLICATION_YEAR
 		 */
-		currentURL = driver.getCurrentUrl();		
+		currentURL = driver.getCurrentUrl();
 				
 		for(WebElement el : elem) {
 			String[] parsingData = new String[6];
@@ -221,7 +218,6 @@ public class HalfAutoGSCrawler {
 			try {
 				anchor = h3.findElement(By.tagName("a"));
 			}catch (NoSuchElementException e) {
-				count--;
 				continue;
 			}
 			
@@ -240,7 +236,7 @@ public class HalfAutoGSCrawler {
 				if(Character.isLetter(parsingData[2].charAt(i)) && !Character.isDigit(parsingData[2].charAt(i))) {
 					parsingData[2] = parsingData[2].substring(i, length);
 					break;
-				}	
+				}
 			}
 			
 			
@@ -256,10 +252,14 @@ public class HalfAutoGSCrawler {
 			//PUBLICATION_YEAR
 			parsingData[5] = findPubYear(el, gs_aTtext);
 			
-			insertCheck(parsingData);
+			insertCheck(parsingData, count);			
 		}
 		
-		return count + elem.size();				
+		System.out.println("ㅡㅡㅡseleniumㅡㅡㅡ");
+		System.out.println(count);
+		System.out.println("ㅡㅡㅡseleniumㅡㅡㅡ");
+		
+		return count;				
 	}
 
 	private static String findCNUM(List<WebElement> gsFl_a) {
@@ -275,7 +275,7 @@ public class HalfAutoGSCrawler {
     		}
 		}
 		
-		return "";
+		return null;
 	}
 
 	private static String findPubYear(WebElement el, String gs_aText) {	
@@ -288,11 +288,11 @@ public class HalfAutoGSCrawler {
             return gs_aText.substring(startIndex, endIndex);	            
         }	      
         
-        return "";
+        return null;
         
 	}
 	
-	private static void insertCheck(String[] parsingData) throws Exception {
+	private static void insertCheck(String[] parsingData, int count) throws Exception {
         if (mysql.isClosed()) {            	
         	connectDB();
         	mysql = DB.EDBCon.get(label);
@@ -319,35 +319,35 @@ public class HalfAutoGSCrawler {
         }
 	}
 
-	private static void insert(String[] parsingData) throws Exception {
-		
+	private static void insert(String[] parsingData) throws Exception {		
 		 if (mysql.isClosed()) {
 	        	connectDB();
-	        }
-	        
-	        PreparedStatement pst = null;
-	        try {
-	            parsingData[1] = (parsingData[1] == null) ? "" : parsingData[1];
-	            parsingData[1] = parsingData[1].replace("\'", "\\'");
-	            
-	            pst = mysql.prepareStatement("INSERT INTO GoogleScholarPaperTestInfo5 (URL,TITLE,AUTHOR,CID,CNUM,PUBLICATION_YEAR,CREATE_DATE,CREATE_USER_ID) VALUES(?,?,?,?,?,?,NOW(6),7)");
-	        	pst.setString(1, parsingData[0]);
-	            pst.setString(2, parsingData[1]);
-	            pst.setString(3, parsingData[2]);
-	            pst.setString(4, parsingData[3]);
-	            pst.setString(5, parsingData[4]);
-	            pst.setString(6, parsingData[5]);
-	            pst.executeUpdate();            
-	            if (!pst.isClosed()) pst.close();
-	            Log.writeLogMsg("[Insert Success]", path);
-	            
-	        } catch (Exception e) {
-	        	Log.writeLogMsg("[Insert Fail]", path);
-	            throw new Exception();            
-	        } finally {
-	            if (!pst.isClosed()) pst.close();
-	        }
-		
+         }
+        
+         PreparedStatement pst = null;
+         try {
+             parsingData[1] = (parsingData[1] == null) ? "" : parsingData[1];
+             parsingData[1] = parsingData[1].replace("\'", "\\'");
+            
+             pst = mysql.prepareStatement("INSERT INTO GoogleScholarPaperTestInfo5 (URL,TITLE,AUTHOR,CID,CNUM,PUBLICATION_YEAR,CREATE_DATE,CREATE_USER_ID) VALUES(?,?,?,?,?,?,NOW(6),7)");
+        	 pst.setString(1, parsingData[0]);
+             pst.setString(2, parsingData[1]);
+             pst.setString(3, parsingData[2]);
+             pst.setString(4, parsingData[3]);
+             pst.setString(5, parsingData[4]);
+             pst.setString(6, parsingData[5]);
+             pst.executeUpdate();            
+             if (!pst.isClosed()) pst.close();
+             Log.writeLogMsg("[Insert Success]", path);
+             count++;
+             
+         } catch (Exception e) {
+        	 Log.writeLogMsg("[Insert Fail]", path);
+             throw new Exception();            
+         } finally {
+             if (!pst.isClosed()) pst.close();
+         }
+
 	}
 
 	private static void update(String[] parsingData) throws SQLException {
@@ -361,7 +361,7 @@ public class HalfAutoGSCrawler {
         try {
         	rs = pst.executeQuery();        		
         		if(rs.next()) {
-            		if(rs.getString("PUBLICATION_YEAR") == null || !rs.getString("URL").equals(parsingData[0]) || !rs.getString("TITLE").equals(parsingData[1]) || !rs.getString("AUTHOR").equals(parsingData[2])
+            		if(rs.getString("PUBLICATION_YEAR") == null || !rs.getString("URL").equals(parsingData[0]) || !rs.getString("CNUM").equals(parsingData[1]) || !rs.getString("AUTHOR").equals(parsingData[2])
             				|| !rs.getString("CNUM").equals(parsingData[4]) || !rs.getString("PUBLICATION_YEAR").equals(parsingData[5])) {
             			pst = mysql.prepareStatement("UPDATE GoogleScholarPaperTestInfo5 SET URL=?, TITLE=?, AUTHOR=?, CNUM=?, PUBLICATION_YEAR=?, LASTUPDATE_DATE = NOW(6) WHERE CID=?");
             			pst.setString(1, parsingData[0]);
@@ -372,6 +372,7 @@ public class HalfAutoGSCrawler {
             			pst.setString(6, parsingData[3]);            			
             			pst.executeUpdate();
             			Log.writeLogMsg("[Distinct_list_Update]", path); 
+            			count++;
             		}
             		
         		else Log.writeLogMsg("[Distinct_list_NoUpdate]", path);
@@ -387,9 +388,10 @@ public class HalfAutoGSCrawler {
                 pst.close();                
             }       
         }
+
 	}
 	
-	private static void updateHistoryWhenError(Connection mysql, Exception exception, int lastHistoryId, Integer count, ChromeDriver driver) throws SQLException {
+	private static void updateHistoryWhenError(Connection mysql, Exception exception, int lastHistoryId, Integer count, ChromeDriver driver) throws Exception {
 		if(mysql.isClosed()){
 			connectDB();
 			mysql = DB.EDBCon.get(label);
@@ -405,5 +407,37 @@ public class HalfAutoGSCrawler {
         
         driver.close();
         driver.quit();
+        
+        chromeDriverKill();
     }
+    
+	private static void updateHistoryWhenFinished(Connection mysql2, WebDriverException exception, int lastHistoryId,
+			ChromeDriver driver, long start) throws Exception {
+		if(mysql.isClosed()){
+			connectDB();
+			mysql = DB.EDBCon.get(label);
+		}
+		
+        double end = (System.currentTimeMillis() - start) / 1000.0;
+        
+        PreparedStatement pst = mysql.prepareStatement("UPDATE GoogleScholarCrawlerHistoryInfo SET " +
+                "GOOGLE_SCHOLAR_PUBLICATION_CNT = ?, STATUS = 'Y', END_DATE = NOW(6), ELAPSED_TIME = ?, LASTUPDATE_DATE = NOW(6) WHERE HISTORY_ID = ?");
+        pst.setInt(1, count);
+        pst.setDouble(2, end);
+        pst.setInt(3, lastHistoryId);
+        pst.executeUpdate();
+
+        if (pst != null) pst.close();
+        if (!mysql.isClosed()) closeDB();
+        
+        driver.quit();
+        
+        chromeDriverKill();
+	}
+	
+	private static void chromeDriverKill() throws Exception {
+        ProcessBuilder processkill = new ProcessBuilder("cmd.exe", "/C", "taskkill", "/f", "/im", "chrome.exe");
+        Process kill = processkill.start();
+        kill.waitFor();
+	}
 }
