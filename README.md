@@ -20,19 +20,20 @@ Window, Linux 환경에서의JDBC, selenium을 이용한 키워드 검색 결과
    - random term 적용.
    - routing table 조작(NIC Switching)
    - seleinum 실행 로직 변경
-3. (07/04) 반자동화 Crawler 제작
-   - Application Run - 실행되는 Chrome을 통한 검색 - Parsing - Insert - 페이지 이동 - 반복 (Chrome 종료 시 App terminate)
+3. (07/04) 데이터의 필요성에 초점을 맞춰 새로운 아이디어 제시
+   - 데이터가 필요하다는 관점에서, 필요 시 최소한의 동작을 사람이 수행하고 프로그램이 데이터 파싱 및 insert/update 수행하자!!!
+   - 사용자가 검색어 입력과 페이지 이동의 과정은 직접 수행. 나머지 작업은 프로그램이 수행.
 <br><br>
 
 ## 👍성과
 1. 모듈단위 분리를 통한 App 실행 시 DB 내의 search PK, Crawling할 페이지 수를 argument로 받음.
 2. reCAPTCHA 및, 429 error, 403 error handling 시도 ➡️ **일 단위 insert data 최소 4배 증가 (100 -> 400건 이상)**
-3. (07/04) 반자동화 Crawler로 인해 insert data의 증가 ➡️ **(일 단위 400건 이상 -> 10분 당 450건 이상)**
+3. (07/04) 새로운 프로그램 제작으로 insert data의 증가 ➡️ **(일 단위 400건 이상 -> 10분 당 450건 이상)**
 <br><br>
 
 ## 😡한계
 Google의 주기적인 봇 탐지, Crawler block 기능이 update되어 현 상황에 대한 단발적인 해결책만 제시 가능하고, 주기적인 update가 필요하여, 자동화라고 된 Crawler라고 보기 어려움
-(07/04) 반자동화로 인한 사용자가 직접 검색어 입력, 페이지 넘김 등의 최소 작업이 필요
+(07/04) 사용자가 직접 검색어 입력, 페이지 넘김 등의 최소 작업이 필요
 <br><br>
 
 ## 🛠️기술
