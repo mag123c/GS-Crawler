@@ -3,7 +3,7 @@
 ## 📝설명
 Window, Linux 환경에서의JDBC, selenium을 이용한 키워드 검색 결과 데이터를 DB에 insert하고, update할 수 있는 Crawler
 
-+ (07/04) 자동화 시 reCAPTCHA의 100% 회피가 불가능하여, parsing만 해주는 반자동화 Crawler 제작.
++ (07/04) 자동화 시 reCAPTCHA의 100% 회피가 불가능하여, parsing만 해주는 수집 Program 제작
 
 고도화 기간 : 2023.05 ~ 2023.06
 <br><br>
@@ -53,7 +53,7 @@ java -jar [filename] [DB keyword ID(PK)] [max_page_num]
 3. NIC Switching을 미사용 시, switchingNIC 메서드와 관련 작업 수행 코드 주석처리.
 4. gateway map에 실 사용되는 gateway 입력
 
-### 반자동화 Crawler
+### 수집 Program
 1. 단순 Application Run
 2. 실행되는 Chrome에 검색어 입력
 3. Parsing 완료 후 페이지 넘김
