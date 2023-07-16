@@ -2,24 +2,24 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="lib/mysql_j8.0/mysql-connector-java-8.0.16.jar"/>
-	<classpathentry kind="lib" path="lib/selenium/byte-buddy-1.8.15.jar"/>
-	<classpathentry kind="lib" path="lib/selenium/client-combined-3.141.59.jar"/>
-	<classpathentry kind="lib" path="lib/selenium/commons-exec-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/selenium/guava-25.0-jre.jar"/>
-	<classpathentry kind="lib" path="lib/selenium/okhttp-3.11.0.jar"/>
-	<classpathentry kind="lib" path="lib/selenium/okio-1.14.0.jar"/>
-	<classpathentry kind="lib" path="lib/jsoup/jsoup-1.11.3-javadoc.jar"/>
-	<classpathentry kind="lib" path="lib/jsoup/jsoup-1.11.3-sources.jar"/>
-	<classpathentry kind="lib" path="lib/jsoup/jsoup-1.11.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/infoboss/Downloads/webdrivermannager/commons-compress-1.21.jar"/>
-	<classpathentry kind="lib" path="C:/Users/infoboss/Downloads/webdrivermannager/commons-io-2.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/infoboss/Downloads/webdrivermannager/commons-lang3-3.12.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/infoboss/Downloads/webdrivermannager/dec-0.1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/infoboss/Downloads/webdrivermannager/httpclient5-5.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/infoboss/Downloads/webdrivermannager/httpcore5-5.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/infoboss/Downloads/webdrivermannager/httpcore5-h2-5.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/infoboss/Downloads/webdrivermannager/slf4j-api-2.0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/infoboss/Downloads/webdrivermannager/webdrivermanager-5.3.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/jsoup/jsoup-1.11.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/jsoup/jsoup-1.11.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/jsoup/jsoup-1.11.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/mysql_j8.0/mysql-connector-java-8.0.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/selenium/byte-buddy-1.8.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/selenium/client-combined-3.141.59.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/selenium/commons-exec-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/selenium/guava-25.0-jre.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/selenium/okhttp-3.11.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/selenium/okio-1.14.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/webdrivermannager/commons-compress-1.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/webdrivermannager/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/webdrivermannager/commons-lang3-3.12.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/webdrivermannager/dec-0.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/webdrivermannager/httpclient5-5.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/webdrivermannager/httpcore5-5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/webdrivermannager/httpcore5-h2-5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/webdrivermannager/slf4j-api-2.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/infoboss/Desktop/jh/google-scholar/google-scholar/lib/webdrivermannager/webdrivermanager-5.3.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
